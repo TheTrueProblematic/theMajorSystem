@@ -174,14 +174,85 @@
         '3': ['m'],
         '4': ['r'],
         '5': ['l'],
-        '6': ['j', 'ch', 'sh'],
-        '7': ['k', 'c', 'q', 'ck', 'g'],
+        '6': ['j', 'sh', 'ch', 'soft g', 'g'],
+        '7': ['k', 'q', 'hard c', 'ck'],
         '8': ['v', 'f', 'ph'],
         '9': ['p', 'b'],
     };
 
-    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck', 'gg'];
-    const vowelsAndIgnored = ['a', 'e', 'i', 'o', 'u', 'w', 'h', 'y', 'x'];
+    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck'];
+    const vowelsAndIgnored = ['a', 'e', 'i', 'o', 'u', 'w', 'h', 'y'];
+
+    function mapLetterToDigit(sound) {
+        for (let digit in majorSystemMap) {
+            if (majorSystemMap[digit].includes(sound)) {
+                return digit;
+            }
+        }
+        return '';
+    }
+
+    function getMajorSystemCode(word) {
+        word = word.toLowerCase().replace(/[^a-z]/g, '');
+
+        let code = '';
+        let i = 0;
+
+        while (i < word.length) {
+            let letter = word[i];
+            let nextLetter = word[i + 1] || '';
+            let combo = letter + nextLetter;
+            let mappedDigit = '';
+            let currentSound = '';
+
+            // Skip vowels and ignored letters unless part of a digraph
+            if (vowelsAndIgnored.includes(letter)) {
+                i++;
+                continue;
+            }
+
+            // Check for digraphs
+            if (digraphs.includes(combo)) {
+                currentSound = combo;
+                mappedDigit = mapLetterToDigit(combo);
+                i += 2;
+            } else {
+                // Handle soft 'c' and 'g' before 'e', 'i', or 'y'
+                if ((letter === 'c' || letter === 'g') && ['e', 'i', 'y'].includes(nextLetter)) {
+                    if (letter === 'c') {
+                        currentSound = 's';
+                        mappedDigit = mapLetterToDigit('s'); // 's' maps to '0'
+                    } else {
+                        currentSound = 'j';
+                        mappedDigit = mapLetterToDigit('j'); // 'j' maps to '6'
+                    }
+                    i++;
+                } else {
+                    currentSound = letter;
+
+                    // Map 'c' to 'k' if not soft
+                    if (letter === 'c') {
+                        currentSound = 'k';
+                    }
+
+                    mappedDigit = mapLetterToDigit(currentSound);
+                    i++;
+                }
+            }
+
+            // Skip if no mapping found
+            if (!mappedDigit) {
+                continue;
+            }
+
+            // Add the mapped digit to the code
+            code += mappedDigit;
+        }
+
+        return code;
+    }
+
+    // The rest of the JavaScript code remains the same
     const darkModeIcon = document.getElementById('dark-mode-icon');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
@@ -205,45 +276,6 @@
         const digits = parseInt(digitSlider.value);
         currentNumber = generateRandomNumber(digits);
         numberDisplay.textContent = currentNumber;
-    }
-
-    function getMajorSystemCode(word) {
-        word = word.toLowerCase();
-        // Remove non-letters
-        word = word.replace(/[^a-z]/g, '');
-        // Remove vowels and ignored letters
-        let letters = word.split('').filter(letter => !vowelsAndIgnored.includes(letter));
-        let code = '';
-        let i = 0;
-        let previousChar = '';
-        while (i < letters.length) {
-            let letter = letters[i];
-            let nextLetter = letters[i + 1] || '';
-            let combo = letter + nextLetter;
-            if (previousChar === letter) {
-                i++;
-                continue; // Skip double letters
-            }
-            if (digraphs.includes(combo)) {
-                code += mapLetterToDigit(combo);
-                previousChar = nextLetter;
-                i += 2;
-            } else {
-                code += mapLetterToDigit(letter);
-                previousChar = letter;
-                i++;
-            }
-        }
-        return code;
-    }
-
-    function mapLetterToDigit(letter) {
-        for (let digit in majorSystemMap) {
-            if (majorSystemMap[digit].includes(letter)) {
-                return digit;
-            }
-        }
-        return '';
     }
 
     function checkWord() {
@@ -291,7 +323,6 @@
     // Initialize
     sliderValue.textContent = digitSlider.value;
     updateNumber();
-
 </script>
 </body>
 </html>
