@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Major System Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: white;
@@ -22,41 +23,46 @@
             height: 30px;
         }
         h1 {
-            margin-top: 50px;
-            font-size: 48px;
+            margin-top: 2em;
+            font-size: 3em;
         }
         h2 {
-            font-size: 24px;
-            margin-bottom: 50px;
+            font-size: 1.5em;
+            margin-bottom: 2em;
         }
         #number-display {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 4em;
+            margin-bottom: 1em;
+            word-wrap: break-word;
+            padding: 0 1em;
         }
         #word-input {
-            font-size: 24px;
-            padding: 10px;
-            width: 300px;
+            font-size: 1.5em;
+            padding: 0.5em;
+            width: 80%;
+            max-width: 300px;
+            box-sizing: border-box;
         }
         #message {
-            font-size: 24px;
-            height: 30px;
-            margin-top: 20px;
+            font-size: 1.5em;
+            margin-top: 1em;
+            min-height: 1.5em;
         }
         #slider-container {
             position: fixed;
-            bottom: 50px;
+            bottom: 2em;
             width: 100%;
             text-align: center;
         }
         #slider-value {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
         }
         #digit-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 300px;
+            width: 80%;
+            max-width: 300px;
             height: 15px;
             border-radius: 10px;
             background: black;
@@ -93,6 +99,41 @@
         .dark-mode #digit-slider::-moz-range-thumb {
             background: white;
         }
+        /* Media queries for smaller screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5em;
+                margin-top: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+                margin-bottom: 1.5em;
+            }
+            #number-display {
+                font-size: 3em;
+                margin-bottom: 1em;
+            }
+            #word-input {
+                font-size: 1.2em;
+            }
+            #message {
+                font-size: 1.2em;
+            }
+            #slider-value {
+                font-size: 1.2em;
+            }
+            #digit-slider {
+                height: 12px;
+            }
+            #digit-slider::-webkit-slider-thumb,
+            #digit-slider::-moz-range-thumb {
+                width: 20px;
+                height: 20px;
+            }
+            #slider-container {
+                bottom: 1em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -128,13 +169,13 @@
         '3': ['m'],
         '4': ['r'],
         '5': ['l'],
-        '6': ['j', 'ch', 'sh', 'ge', 'gi', 'gy'],
-        '7': ['c', 'k', 'g', 'q', 'ck', 'gg'],
+        '6': ['j', 'ch', 'sh'],
+        '7': ['k', 'c', 'q', 'ck', 'g'],
         '8': ['v', 'f', 'ph'],
         '9': ['p', 'b'],
     };
 
-    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck', 'gg', 'ge', 'gi', 'gy'];
+    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck', 'gg'];
     const vowelsAndIgnored = ['a', 'e', 'i', 'o', 'u', 'w', 'h', 'y', 'x'];
     const darkModeIcon = document.getElementById('dark-mode-icon');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
