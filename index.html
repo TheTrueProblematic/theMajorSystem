@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Major System Test</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #dark-mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        #dark-mode-icon {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 48px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+        #number-display {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        #word-input {
+            font-size: 24px;
+            padding: 10px;
+            width: 300px;
+        }
+        #message {
+            font-size: 24px;
+            height: 30px;
+            margin-top: 20px;
+        }
+        #slider-container {
+            position: fixed;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+        }
+        #slider-value {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        #digit-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 300px;
+            height: 15px;
+            border-radius: 10px;
+            background: black;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        #digit-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: black;
+            cursor: pointer;
+        }
+        #digit-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: black;
+            cursor: pointer;
+        }
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+        .dark-mode #digit-slider {
+            background: white;
+        }
+        .dark-mode #digit-slider::-webkit-slider-thumb {
+            background: white;
+        }
+        .dark-mode #digit-slider::-moz-range-thumb {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<!-- Dark mode toggle icon -->
+<div id="dark-mode-toggle">
+    <img src="../resources/darkMode.png" alt="Toggle Dark Mode" id="dark-mode-icon">
+</div>
+
+<!-- Title and subtitle -->
+<h1>Major System Test</h1>
+<h2>Practice the major system!</h2>
+
+<!-- Random number display -->
+<div id="number-display"></div>
+
+<!-- Input box -->
+<input type="text" id="word-input" placeholder="Enter a word">
+
+<!-- Correct/Incorrect message -->
+<div id="message"></div>
+
+<!-- Slider for number of digits -->
+<div id="slider-container">
+    <div id="slider-value">5</div>
+    <input type="range" min="1" max="10" value="3" id="digit-slider">
+</div>
+
+<script>
+    const majorSystemMap = {
+        '0': ['s', 'z'],
+        '1': ['t', 'd', 'th'],
+        '2': ['n'],
+        '3': ['m'],
+        '4': ['r'],
+        '5': ['l'],
+        '6': ['j', 'ch', 'sh', 'ge', 'gi', 'gy'],
+        '7': ['c', 'k', 'g', 'q', 'ck', 'gg'],
+        '8': ['v', 'f', 'ph'],
+        '9': ['p', 'b'],
+    };
+
+    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck', 'gg', 'ge', 'gi', 'gy'];
+    const vowelsAndIgnored = ['a', 'e', 'i', 'o', 'u', 'w', 'h', 'y', 'x'];
+    const darkModeIcon = document.getElementById('dark-mode-icon');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+    const numberDisplay = document.getElementById('number-display');
+    const wordInput = document.getElementById('word-input');
+    const messageDiv = document.getElementById('message');
+    const digitSlider = document.getElementById('digit-slider');
+    const sliderValue = document.getElementById('slider-value');
+    let currentNumber = '';
+    let isDarkMode = false;
+
+    function generateRandomNumber(digits) {
+        let number = '';
+        for (let i = 0; i < digits; i++) {
+            number += Math.floor(Math.random() * 10).toString();
+        }
+        return number;
+    }
+
+    function updateNumber() {
+        const digits = parseInt(digitSlider.value);
+        currentNumber = generateRandomNumber(digits);
+        numberDisplay.textContent = currentNumber;
+    }
+
+    function getMajorSystemCode(word) {
+        word = word.toLowerCase();
+        // Remove non-letters
+        word = word.replace(/[^a-z]/g, '');
+        // Remove vowels and ignored letters
+        let letters = word.split('').filter(letter => !vowelsAndIgnored.includes(letter));
+        let code = '';
+        let i = 0;
+        let previousChar = '';
+        while (i < letters.length) {
+            let letter = letters[i];
+            let nextLetter = letters[i + 1] || '';
+            let combo = letter + nextLetter;
+            if (previousChar === letter) {
+                i++;
+                continue; // Skip double letters
+            }
+            if (digraphs.includes(combo)) {
+                code += mapLetterToDigit(combo);
+                previousChar = nextLetter;
+                i += 2;
+            } else {
+                code += mapLetterToDigit(letter);
+                previousChar = letter;
+                i++;
+            }
+        }
+        return code;
+    }
+
+    function mapLetterToDigit(letter) {
+        for (let digit in majorSystemMap) {
+            if (majorSystemMap[digit].includes(letter)) {
+                return digit;
+            }
+        }
+        return '';
+    }
+
+    function checkWord() {
+        const word = wordInput.value.trim();
+        if (word === '') return;
+        const code = getMajorSystemCode(word);
+        if (code === currentNumber) {
+            messageDiv.textContent = 'Correct!';
+            setTimeout(() => {
+                messageDiv.textContent = '';
+                wordInput.value = '';
+                updateNumber();
+            }, 1000);
+        } else {
+            messageDiv.textContent = 'Incorrect!';
+            setTimeout(() => {
+                messageDiv.textContent = '';
+                wordInput.value = '';
+            }, 1000);
+        }
+    }
+
+    wordInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            checkWord();
+        }
+    });
+
+    digitSlider.addEventListener('input', function() {
+        sliderValue.textContent = digitSlider.value;
+        updateNumber();
+    });
+
+    darkModeToggle.addEventListener('click', function() {
+        isDarkMode = !isDarkMode;
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+            darkModeIcon.src = '../resources/lightMode.png';
+        } else {
+            body.classList.remove('dark-mode');
+            darkModeIcon.src = '../resources/darkMode.png';
+        }
+    });
+
+    // Initialize
+    sliderValue.textContent = digitSlider.value;
+    updateNumber();
+
+</script>
+</body>
+</html>
