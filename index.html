@@ -7,7 +7,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to the 'Major System Test'—an interactive and mobile-friendly platform designed to help you practice and master the Major System, a powerful mnemonic technique used to convert numbers into words for improved memory recall. Whether you're looking to memorize telephone numbers, dates, or long numerical sequences, our tool provides an engaging way to enhance your memory skills. The site features a user-friendly interface with a customizable digit slider ranging from 1 to 10, allowing you to challenge yourself with numbers of varying lengths. With a sleek design that includes a dark mode toggle for optimal viewing in any lighting condition, you can comfortably use the site on both desktop and mobile devices. Dive into the world of mnemonic devices, learn how consonant sounds correspond to digits, and make learning fun with instant feedback on your answers. Perfect for students, professionals, and anyone interested in memory improvement techniques. Start practicing the Major System today and unlock the full potential of your memory!">
+    <meta name="description"
+          content="Welcome to the 'Major System Test'—an interactive and mobile-friendly platform designed to help you practice and master the Major System, a powerful mnemonic technique used to convert numbers into words for improved memory recall. Whether you're looking to memorize telephone numbers, dates, or long numerical sequences, our tool provides an engaging way to enhance your memory skills. The site features a user-friendly interface with a customizable digit slider ranging from 1 to 10, allowing you to challenge yourself with numbers of varying lengths. With a sleek design that includes a dark mode toggle for optimal viewing in any lighting condition, you can comfortably use the site on both desktop and mobile devices. Dive into the world of mnemonic devices, learn how consonant sounds correspond to digits, and make learning fun with instant feedback on your answers. Perfect for students, professionals, and anyone interested in memory improvement techniques. Start practicing the Major System today and unlock the full potential of your memory!">
     <style>
         body {
             background-color: white;
@@ -17,30 +18,36 @@
             margin: 0;
             padding: 0;
         }
+
         #dark-mode-toggle {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 2vh;
+            right: 2vw;
         }
+
         #dark-mode-icon {
             cursor: pointer;
             width: 30px;
             height: 30px;
         }
+
         h1 {
             margin-top: 2em;
             font-size: 3em;
         }
+
         h2 {
             font-size: 1.5em;
             margin-bottom: 2em;
         }
+
         #number-display {
             font-size: 4em;
             margin-bottom: 1em;
             word-wrap: break-word;
             padding: 0 1em;
         }
+
         #word-input {
             font-size: 1.5em;
             padding: 0.5em;
@@ -48,21 +55,32 @@
             max-width: 300px;
             box-sizing: border-box;
         }
+
         #message {
             font-size: 1.5em;
             margin-top: 1em;
             min-height: 1.5em;
         }
+
+        footer {
+            position: fixed;
+            bottom: 2vh;
+            width: 100vw;
+            text-align: center;
+        }
+
         #slider-container {
             position: fixed;
-            bottom: 2em;
+            bottom: 10vh; /* Adjusted from original user code for footer space */
             width: 100%;
             text-align: center;
         }
+
         #slider-value {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
+
         #digit-slider {
             -webkit-appearance: none;
             appearance: none;
@@ -75,6 +93,7 @@
             opacity: 0.7;
             transition: opacity .2s;
         }
+
         #digit-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -84,6 +103,7 @@
             background: black;
             cursor: pointer;
         }
+
         #digit-slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
@@ -91,96 +111,135 @@
             background: black;
             cursor: pointer;
         }
+
         .dark-mode {
             background-color: black;
             color: white;
         }
+
+        /* Dark mode style for footer link */
+        .dark-mode footer a {
+            color: white;
+        }
+
         .dark-mode #digit-slider {
             background: white;
         }
+
         .dark-mode #digit-slider::-webkit-slider-thumb {
             background: white;
         }
+
         .dark-mode #digit-slider::-moz-range-thumb {
             background: white;
         }
+
         /* Media queries for smaller screens */
         @media (max-width: 600px) {
             h1 {
                 font-size: 2.5em;
                 margin-top: 1.5em;
             }
+
             h2 {
                 font-size: 1.2em;
                 margin-bottom: 1.5em;
             }
+
             #number-display {
                 font-size: 3em;
                 margin-bottom: 1em;
             }
+
             #word-input {
                 font-size: 1.2em;
             }
+
             #message {
                 font-size: 1.2em;
             }
+
             #slider-value {
                 font-size: 1.2em;
             }
+
             #digit-slider {
                 height: 12px;
             }
+
             #digit-slider::-webkit-slider-thumb,
             #digit-slider::-moz-range-thumb {
                 width: 20px;
                 height: 20px;
             }
+
             #slider-container {
-                bottom: 1em;
+                bottom: 8vh; /* Adjust slider position for small screens */
             }
+
+            footer {
+                font-size: 0.8em; /* Adjust footer font size */
+            }
+        }
+
+        #howTo {
+            position: absolute;
+            top: 2vh;
+            left: 2vw;
+        }
+
+        #howToLink {
+            text-decoration: none;
+            color: inherit;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        #howToLink:hover {
+            color: #E63946; /* Keep hover color */
+            transition: 0.3s;
         }
     </style>
 </head>
 <body>
-<!-- Dark mode toggle icon -->
 <div id="dark-mode-toggle">
     <img src="../resources/darkMode.png" alt="Toggle Dark Mode" id="dark-mode-icon">
 </div>
 
-<!-- Title and subtitle -->
 <h1>Major System Test</h1>
 <h2>Practice the major system!</h2>
 
-<!-- Random number display -->
+<div id="howTo">
+    <a id="howToLink" href="https://en.wikipedia.org/wiki/Mnemonic_major_system">What is This?</a>
+</div>
+
 <div id="number-display"></div>
 
-<!-- Input box -->
 <input type="text" id="word-input" placeholder="Enter a word">
 
-<!-- Correct/Incorrect message -->
 <div id="message"></div>
 
-<!-- Slider for number of digits -->
 <div id="slider-container">
-    <div id="slider-value">5</div>
+    <div id="slider-value">3</div>
     <input type="range" min="1" max="10" value="3" id="digit-slider">
 </div>
 
-<script>
-    const majorSystemMap = {
-        '0': ['s', 'z'],
-        '1': ['t', 'd', 'th'],
-        '2': ['n'],
-        '3': ['m'],
-        '4': ['r'],
-        '5': ['l'],
-        '6': ['j', 'sh', 'ch'],
-        '7': ['k', 'q', 'hard c', 'ck', 'g', 'soft g'],
-        '8': ['v', 'f', 'ph'],
-        '9': ['p', 'b'],
-    };
+<footer>
+    <a href="https://maximilianmcclelland.com" style="text-decoration: none; color: inherit;">
+        TrueProblematic &#169 <span id="footer-year"></span>
+    </a>
+</footer>
 
-    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck'];
+<script>
+    document.getElementById("footer-year").innerText = new Date().getFullYear();
+
+    // --- Major System Logic (Unchanged from previous version) ---
+    const majorSystemMap = {
+        '0': ['s', 'z'], '1': ['t', 'd', 'th'], '2': ['n'], '3': ['m'], '4': ['r'],
+        '5': ['l'], '6': ['j', 'sh', 'ch', 'soft g', 'dg'], '7': ['k', 'q', 'c', 'ck', 'g'],
+        '8': ['v', 'f', 'ph'], '9': ['p', 'b'],
+    };
+    const digraphs = ['ch', 'sh', 'th', 'ph', 'ck', 'dg'];
     const vowelsAndIgnored = ['a', 'e', 'i', 'o', 'u', 'w', 'h', 'y'];
 
     function mapLetterToDigit(sound) {
@@ -189,70 +248,80 @@
                 return digit;
             }
         }
+        if (sound === 'c') return '7';
+        if (sound === 'g') return '7';
         return '';
     }
 
     function getMajorSystemCode(word) {
         word = word.toLowerCase().replace(/[^a-z]/g, '');
-
         let code = '';
         let i = 0;
-
+        let lastAddedDigit = null;
         while (i < word.length) {
             let letter = word[i];
             let nextLetter = word[i + 1] || '';
-            let combo = letter + nextLetter;
-            let mappedDigit = '';
+            let nextNextLetter = word[i + 2] || '';
             let currentSound = '';
-
-            // Skip vowels and ignored letters unless part of a digraph
+            let mappedDigit = '';
+            let consumed = 1;
             if (vowelsAndIgnored.includes(letter)) {
                 i++;
+                lastAddedDigit = null;
                 continue;
             }
-
-            // Check for digraphs
-            if (digraphs.includes(combo)) {
-                currentSound = combo;
-                mappedDigit = mapLetterToDigit(combo);
-                i += 2;
+            let threeLetters = letter + nextLetter + nextNextLetter;
+            let twoLetters = letter + nextLetter;
+            if (threeLetters === 'dge') {
+                currentSound = 'j';
+                mappedDigit = '6';
+                consumed = 3;
+            } else if (digraphs.includes(twoLetters)) {
+                currentSound = twoLetters;
+                if (currentSound === 'dg') mappedDigit = '6';
+                else mappedDigit = mapLetterToDigit(currentSound);
+                consumed = 2;
             } else {
-                // Handle soft 'c' and 'g' before 'e', 'i', or 'y'
-                if ((letter === 'c' || letter === 'g') && ['e', 'i', 'y'].includes(nextLetter)) {
-                    if (letter === 'c') {
-                        currentSound = 's';
-                        mappedDigit = mapLetterToDigit('s'); // 's' maps to '0'
-                    } else {
-                        currentSound = 'j';
-                        mappedDigit = mapLetterToDigit('j'); // 'j' maps to '6'
+                consumed = 1;
+                if (letter === 'c' && ['e', 'i', 'y'].includes(nextLetter)) {
+                    currentSound = 's';
+                    mappedDigit = '0';
+                } else if (letter === 'g' && ['e', 'i', 'y'].includes(nextLetter)) {
+                    currentSound = 'j';
+                    mappedDigit = '6';
+                } else if (letter === 'x') {
+                    let k_digit = '7';
+                    if (k_digit !== lastAddedDigit) {
+                        code += k_digit;
+                        lastAddedDigit = k_digit;
                     }
-                    i++;
+                    let s_digit = '0';
+                    if (s_digit !== lastAddedDigit) {
+                        code += s_digit;
+                        lastAddedDigit = s_digit;
+                    }
+                    mappedDigit = null;
                 } else {
                     currentSound = letter;
-
-                    // Map 'c' to 'k' if not soft
-                    if (letter === 'c') {
-                        currentSound = 'k';
-                    }
-
                     mappedDigit = mapLetterToDigit(currentSound);
-                    i++;
                 }
             }
-
-            // Skip if no mapping found
-            if (!mappedDigit) {
-                continue;
+            if (mappedDigit && mappedDigit !== lastAddedDigit) {
+                code += mappedDigit;
+                lastAddedDigit = mappedDigit;
+            } else if (mappedDigit && code.length === 0) {
+                code += mappedDigit;
+                lastAddedDigit = mappedDigit;
             }
-
-            // Add the mapped digit to the code
-            code += mappedDigit;
+            i += consumed;
         }
-
         return code;
     }
 
-    // The rest of the JavaScript code remains the same
+    // --- End of Major System Logic ---
+
+
+    // --- UI Elements ---
     const darkModeIcon = document.getElementById('dark-mode-icon');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
@@ -262,8 +331,9 @@
     const digitSlider = document.getElementById('digit-slider');
     const sliderValue = document.getElementById('slider-value');
     let currentNumber = '';
-    let isDarkMode = false;
+    let isDarkMode = false; // Dark mode state tracking
 
+    // --- UI Functions ---
     function generateRandomNumber(digits) {
         let number = '';
         for (let i = 0; i < digits; i++) {
@@ -273,56 +343,104 @@
     }
 
     function updateNumber() {
+        // Read the *current* slider value, don't assume it's stored or default yet
         const digits = parseInt(digitSlider.value);
         currentNumber = generateRandomNumber(digits);
         numberDisplay.textContent = currentNumber;
+        // Clear input and message when number changes
+        wordInput.value = '';
+        messageDiv.textContent = '';
     }
 
     function checkWord() {
         const word = wordInput.value.trim();
         if (word === '') return;
-        const code = getMajorSystemCode(word);
-        if (code === currentNumber) {
+        const generatedCode = getMajorSystemCode(word);
+        if (generatedCode === currentNumber) {
             messageDiv.textContent = 'Correct!';
+            messageDiv.style.color = '#4CAF50';
             setTimeout(() => {
-                messageDiv.textContent = '';
                 wordInput.value = '';
                 updateNumber();
             }, 1000);
         } else {
-            messageDiv.textContent = 'Incorrect!';
+            messageDiv.textContent = `Incorrect! "${word}" = ${generatedCode || 'nothing'}`;
+            messageDiv.style.color = '#F44336';
             setTimeout(() => {
                 messageDiv.textContent = '';
-                wordInput.value = '';
-            }, 1000);
+            }, 2500);
         }
     }
 
-    wordInput.addEventListener('keyup', function(event) {
+    // --- Event Listeners ---
+    wordInput.addEventListener('keyup', function (event) {
         if (event.key === 'Enter') {
             checkWord();
         }
     });
 
-    digitSlider.addEventListener('input', function() {
-        sliderValue.textContent = digitSlider.value;
-        updateNumber();
+    digitSlider.addEventListener('input', function () {
+        const currentDigits = digitSlider.value;
+        sliderValue.textContent = currentDigits;
+        // *** Store the slider value in localStorage ***
+        localStorage.setItem('majorSystemDigitCount', currentDigits);
+        updateNumber(); // Update number when slider changes
     });
 
-    darkModeToggle.addEventListener('click', function() {
+    darkModeToggle.addEventListener('click', function () {
         isDarkMode = !isDarkMode;
+        body.classList.toggle('dark-mode');
         if (isDarkMode) {
-            body.classList.add('dark-mode');
             darkModeIcon.src = '../resources/lightMode.png';
+            // Store dark mode preference
+            localStorage.setItem('majorSystemDarkMode', 'enabled');
         } else {
-            body.classList.remove('dark-mode');
             darkModeIcon.src = '../resources/darkMode.png';
+            // Remove dark mode preference
+            localStorage.setItem('majorSystemDarkMode', 'disabled');
         }
     });
 
-    // Initialize
-    sliderValue.textContent = digitSlider.value;
-    updateNumber();
+    // --- Initialization ---
+    function initialize() {
+        // Restore Dark Mode Preference
+        const darkModePref = localStorage.getItem('majorSystemDarkMode');
+        if (darkModePref === 'enabled') {
+            isDarkMode = true;
+            body.classList.add('dark-mode');
+            darkModeIcon.src = '../resources/lightMode.png';
+        } else {
+            isDarkMode = false; // Ensure state is correct even if pref is 'disabled' or null
+            body.classList.remove('dark-mode');
+            darkModeIcon.src = '../resources/darkMode.png';
+        }
+
+
+        // *** Restore Slider Value ***
+        const storedDigits = localStorage.getItem('majorSystemDigitCount');
+        const defaultDigits = 3; // Default if nothing stored or invalid
+        let initialDigits = defaultDigits;
+
+        if (storedDigits) {
+            const parsedValue = parseInt(storedDigits);
+            // Validate stored value is within slider range (1-10)
+            const minVal = parseInt(digitSlider.min);
+            const maxVal = parseInt(digitSlider.max);
+            if (!isNaN(parsedValue) && parsedValue >= minVal && parsedValue <= maxVal) {
+                initialDigits = parsedValue;
+            }
+        }
+
+        digitSlider.value = initialDigits;       // Set slider position *before* generating number
+        sliderValue.textContent = initialDigits; // Update the displayed number
+
+        // Generate the first number based on the loaded/default digit count
+        updateNumber();
+    }
+
+    // Run Initialization on page load
+    initialize();
+
 </script>
 </body>
 </html>
