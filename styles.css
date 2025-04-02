@@ -1,0 +1,254 @@
+body {
+    background-color: white;
+    color: black;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#dark-mode-toggle {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+}
+
+#dark-mode-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+h1 {
+    margin-top: 2em;
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 2em;
+}
+
+#number-display {
+    font-size: 4em;
+    margin-bottom: 1em;
+    word-wrap: break-word;
+    padding: 0 1em;
+}
+
+#word-input {
+    font-size: 1.5em;
+    padding: 0.5em;
+    width: 80%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+#message {
+    font-size: 1.5em;
+    margin-top: 1em;
+    min-height: 1.5em;
+}
+
+footer {
+    position: fixed;
+    bottom: 2vh;
+    width: 100vw;
+    text-align: center;
+}
+
+#slider-container {
+    position: fixed;
+    bottom: 10vh;
+    width: 100%;
+    text-align: center;
+}
+
+#slider-value {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+#digit-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80%;
+    max-width: 300px;
+    height: 15px;
+    border-radius: 10px;
+    background: black;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+#digit-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+#digit-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+/* Dark mode style for footer link */
+.dark-mode footer a {
+    color: white;
+}
+
+.dark-mode #digit-slider {
+    background: white;
+}
+
+.dark-mode #digit-slider::-webkit-slider-thumb {
+    background: white;
+}
+
+.dark-mode #digit-slider::-moz-range-thumb {
+    background: white;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5em;
+        margin-top: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-bottom: 1.5em;
+    }
+
+    #number-display {
+        font-size: 3em;
+        margin-bottom: 1em;
+    }
+
+    #word-input {
+        font-size: 1.2em;
+    }
+
+    #message {
+        font-size: 1.2em;
+    }
+
+    #slider-value {
+        font-size: 1.2em;
+    }
+
+    #digit-slider {
+        height: 12px;
+    }
+
+    #digit-slider::-webkit-slider-thumb,
+    #digit-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+    }
+
+    #slider-container {
+        bottom: 8vh;
+    }
+
+    footer {
+        font-size: 0.8em;
+    }
+}
+
+#howTo {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
+}
+
+#howToLink {
+    text-decoration: none;
+    color: black;
+    font-size: 1em;
+    transition: -webkit-text-stroke-width 1s ease;
+    -webkit-text-stroke: 0px white;
+}
+.dark-mode #howToLink{
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    transition: -webkit-text-stroke-width 1s ease;
+    -webkit-text-stroke: 0px white;
+}
+
+#howToLink:hover {
+    color: white;
+    -webkit-text-stroke: 0.5px black;
+}
+.dark-mode #howToLink:hover{
+    color: black;
+    -webkit-text-stroke: 0.5px white;
+    text-shadow: 0px 0px 1px white;
+}
+
+/* Modal Styles */
+#modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vh;
+    max-width: 1000px;
+    background-color: white;
+    border: 0.3vw solid black;
+    border-radius: 2vw;
+    box-shadow: 0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.2);
+    padding: 2vh 2vw;
+    box-sizing: border-box;
+    overflow: scroll;
+}
+
+.dark-mode .modal-content {
+    background-color: black;
+    border: 0.3vw solid white;
+    box-shadow: 0.5vw 0.5vw 1vw rgba(255, 255, 255, 0.2);
+}
+
+#modal-close {
+    position: absolute;
+    top: 2vh;
+    right: 3vh;
+    cursor: pointer;
+    font-size: 3vh;
+}
+
+.modal-content h2 {
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+}
+
+.modal-content p {
+    text-align: justify;
+    margin: 2vh;
+    font-size: 2vh;
+}
